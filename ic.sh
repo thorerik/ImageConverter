@@ -43,7 +43,7 @@ shift $((OPTIND - 1))
 # Check dependencies
 deps
 
-
+# Make sure folder exists, if not, exit.
 if [[ ! -d $1 ]]
 	then
 	echo "$1 does not exist" >&2
@@ -51,6 +51,7 @@ if [[ ! -d $1 ]]
 	exit 1
 fi
 
+# If second folder is specified, check that it exists, if not, ask if user wants to create it, if not, exit.
 if [[ -n $2 ]]
 	then
 	if [[ ! -d $2 ]]
