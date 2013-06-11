@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# mogrify -format jpg $1
-# mv `basename $1 CR2`jpg img/
-# exiftool -b -ThumbnailImage $1 > img/thumb/`basename $1 CR2`jpg 
 source functions.sh
 
 # default we don't recurse
@@ -43,6 +40,12 @@ shift $((OPTIND - 1))
 # Check dependencies
 deps
 
+if [[ -z $1 ]]
+	then
+	echo "$usage"
+	exit 0
+fi
+
 # Make sure folder exists, if not, exit.
 if [[ ! -d $1 ]]
 	then
@@ -67,5 +70,23 @@ if [[ -n $2 ]]
 	fi
 fi
 
+for f in $(ls $1)
+do
+	if [[ -d $1"/"$f ]]; then
+	    echo "$f is a directory"
+	elif [[ -f $1"/"$f ]]; then
+	    echo "$f is a file"
+	else
+	    echo "$f is not valid"
+	    exit 1
+	fi
+done
+
+
+
 
 exit 0
+
+# mogrify -format jpg $1
+# mv `basename $1 CR2`jpg img/
+# exiftool -b -ThumbnailImage $1 > img/thumb/`basename $1 CR2`jpg 
